@@ -6,7 +6,7 @@
 	<artifactId>spring_02</artifactId>
 	<name>spring_02</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<version>1.1.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.10</org.springframework-version>
@@ -146,6 +146,11 @@
 		    <artifactId>ojdbc8</artifactId>
 		    <version>21.7.0.0</version>
 		</dependency>
+		<dependency>
+		   <groupId>com.zaxxer</groupId>
+		   <artifactId>HikariCP</artifactId>
+		   <version>5.0.0</version>
+		</dependency>
 	  	<dependency>
 		    <groupId>org.mybatis</groupId>
 		    <artifactId>mybatis</artifactId>
@@ -179,11 +184,12 @@
 	
 		<!-- Test -->
 		<dependency>
-		    <groupId>org.junit.jupiter</groupId>
-		    <artifactId>junit-jupiter-api</artifactId>
-		    <version>5.9.1</version>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.13.2</version>
 		    <scope>test</scope>
-		</dependency>    
+		</dependency>  
+
 		
 		<!-- javax to jakarta transformer-->
 		

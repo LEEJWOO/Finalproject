@@ -1,46 +1,47 @@
 package kh.nt.spring_02;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml","file:src/main/webapp/WEB-INF/spring/root-context.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml","file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 @WebAppConfiguration
-class HomeControllerTest {
+public class HomeControllerTest {
 	
 	@Autowired
 	private WebApplicationContext wac;
-	private MockMvc MockMvc;
+	
+	private MockMvc mockMvc;
 
-	@BeforeEach
-	void setUp() throws Exception {
-		this.MockMvc=MockMvcBuilders.webAppContextSetup(wac).build();
+	@Before
+	public void setUp() throws Exception {
+		this.mockMvc=MockMvcBuilders.webAppContextSetup(wac).build();
 	}
 
 	@Test
-	void testHome() {
+	public void testHome() {
 		try {
-			MockMvc.perform(MockMvcRequestBuilders.post("/"));
+			mockMvc.perform(get("/"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		fail("Not yet implemented");
 	}
-
 	@Test
-	void testError() {
-		fail("Not yet implemented");
+	public void testfreeboard() {
+		try {
+			mockMvc.perform(get("/freeboard/home?page=1"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
 }

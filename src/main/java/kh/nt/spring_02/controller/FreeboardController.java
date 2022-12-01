@@ -65,7 +65,6 @@ public class FreeboardController {
 	@RequestMapping(value="create_check")
 	public String create_check(Freeboard freeboard,HttpSession hs,@RequestParam("file") MultipartFile[] files){
 		try {
-			logger.info(freeboard.toString());
 			freeboard.setId(((Member)hs.getAttribute("signin")).getId());
 			if(files.length==0) {
 				if(freeboardDAO.create(freeboard))
