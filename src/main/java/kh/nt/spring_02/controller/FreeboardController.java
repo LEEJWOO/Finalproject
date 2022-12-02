@@ -34,12 +34,18 @@ import kh.nt.spring_02.model.Member;
 @Controller
 @RequestMapping(value="/freeboard/")
 @SessionAttributes("signin")
+//@MultipartConfig(
+//fileSizeThreshold=1024*1024*2,
+//maxFileSize=1024*1024*2,
+//maxRequestSize=1024*1024*4,
+//location="/usr/local/tomcat9/webapps/ROOT/resource/"
+//)
 @MultipartConfig(
-		fileSizeThreshold=1024*1024*2,
-		maxFileSize=1024*1024*2,
-		maxRequestSize=1024*1024*4,
-		location="C://resource//"
-		)
+fileSizeThreshold=1024*1024*2,
+maxFileSize=1024*1024*2,
+maxRequestSize=1024*1024*4,
+location="C://resource//"
+)
 public class FreeboardController {
 	
 	@Autowired
@@ -49,6 +55,7 @@ public class FreeboardController {
 //	private ApplicationContext ac=new GenericXmlApplicationContext("classpath:context.xml");
 //	private Encryption en=(Encryption) ac.getBean(Encryption.class);
 
+//	private static final String DOWNLOAD_PATH = "/usr/local/tomcat9/webapps/ROOT/resource/";
 	private static final String DOWNLOAD_PATH = "C://resource//";
 	
 	@RequestMapping(value="home")
@@ -112,7 +119,7 @@ public class FreeboardController {
 	public String download(Freefile reqfile, HttpServletResponse response) {
 		String downPath=freeboardDAO.downloadFile(reqfile);
 		if(downPath!=null){	
-			File file=new File("C:\\resource\\"+downPath);
+			File file=new File(DOWNLOAD_PATH+downPath);
 			try(OutputStream os = response.getOutputStream();FileInputStream fis = new FileInputStream(file);DataInputStream dis=new DataInputStream(fis)){
 				response.setHeader("content-Disposition","attachment;filename="+new String(reqfile.getName().getBytes("utf8"),"ISO-8859-1"));
 				byte[] fileContents= new byte[(int)file.length()];

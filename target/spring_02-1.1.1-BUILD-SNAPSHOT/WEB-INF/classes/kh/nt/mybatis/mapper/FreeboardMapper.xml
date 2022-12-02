@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NT.Lostfinder.MemberMapper">
+	 <select id="home" parameterType="int" resultType="kh.nt.spring_02.model.Freeboard">
+	 	select no, title, id, content, createdate, viewcount from(select rownum as rnum, no, title, id, content, createdate, viewcount from(select * from freeboard order by no asc)) where ((select Count(*) from freeboard)-((#{page}-1)*10)) >= rnum and rnum > ((select Count(*) from freeboard)-(#{page}*10)) order by rnum desc
+	 </select>
+ 	 <select id="homepage" resultType="int">
+	 	select CEIL(Count(*)/10) from freeboard
+	 </select>
+	 <insert id="createboard" parameterType="kh.nt.spring_02.model.Freeboard">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			SELECT freeboard_seq.nextval FROM DUAL
+		</selectKey>
+	 	insert into freeboard values(#{no},#{title},#{id},#{content},default,default)
+	 </insert>
+  	 <insert id="createfile" parameterType="kh.nt.spring_02.model.Freefile">
+	 	insert into freefile values(#{uuid},freeboard_seq.currval,#{id},#{name})
+	 </insert>
+	 <update id="viewcountadd" parameterType="int">
+	 	update freeboard set viewcount=viewcount+1 where no=#{no}
+	 </update>
+	 <select id="viewboard" parameterType="int" resultType="kh.nt.spring_02.model.Freeboard">
+	 	select * from freeboard where no=#{no}
+	 </select>
+ 	 <select id="viewfile" parameterType="int" resultType="kh.nt.spring_02.model.Freefile">
+	 	select * from freefile where no=#{no}
+	 </select>
+	 <update id="updateboard" parameterType="kh.nt.spring_02.model.Freeboard">
+	 	update freeboard set title=#{title}, content=#{content} where id=#{id} and no=#{no}
+	 </update>
+	 <delete id="deleteboard" parameterType="kh.nt.spring_02.model.Freeboard">
+	 	delete from freeboard where no=#{no} and id=#{id}
+	 </delete>
+	 <select id="downloadfile" parameterType="kh.nt.spring_02.model.Freefile" resultType="kh.nt.spring_02.model.Freefile">
+	 	select * from freefile where uuid=#{uuid} and name=#{name}
+	 </select>
+</mapper>

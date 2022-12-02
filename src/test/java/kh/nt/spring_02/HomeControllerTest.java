@@ -1,6 +1,8 @@
 package kh.nt.spring_02;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +42,14 @@ public class HomeControllerTest {
 	public void testfreeboard() {
 		try {
 			mockMvc.perform(get("/freeboard/home?page=1"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testview() {
+		try {
+			mockMvc.perform(post("/member/login").param("id","totoqqqq").param("pw","Click10gl20#")).andDo(print());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
