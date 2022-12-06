@@ -67,8 +67,8 @@
             <td width="15%" align="center">날짜</td>
             <td width="5%">조회</td>
         </tr>        
-        <c:if test="${freeboard ne null}">
-        	<c:forEach var="i" items="${freeboard}" begin="0" end="${fn:length(freeboard)}" step="1">
+        <c:if test="${free.board ne null}">
+        	<c:forEach var="i" items="${free.board}" begin="0" end="${fn:length(free.board)}" step="1">
        			<tr>
        				<td>${i.no}
 	       			<td><a href="view?no=${i.no}">${i.title}</a>
@@ -78,16 +78,23 @@
        			</tr>
         	</c:forEach>
         </c:if>
-        <c:if test="${freepage ne null}">
+        <c:if test="${free.page ne null}">
       			<tr>
       				<td colspan="5">
        				<div class="d-flex justify-content-center">
 	       				<div>
 	       					<button class="page-btn" id="leftlist-btn">◀</button>
 	       				</div>
-			        	<c:forEach var="j" begin="1" end="${freepage}" step="1">
+			        	<c:forEach var="j" begin="1" end="${free.page}" step="1">
 							<div>
-								<button class="listpage-btn" id="${j}-btn">${j}</button>
+								<c:choose> 
+									<c:when test="${free.selectpage == j}" >
+										<button class="listpage-btn" id="${j}-btn" style="color:#4455ff;"><strong>${j}</strong></button>
+									</c:when>
+									<c:otherwise>
+										<button class="listpage-btn" id="${j}-btn">${j}</button>
+									</c:otherwise>
+								</c:choose>
 							</div>
 			        	</c:forEach>
 	        			<div>
@@ -112,8 +119,8 @@
 	<script>
 		$(document).on("click","#rightlist-btn",function(){
 			let listpage=parseInt(document.location.toString().substring(document.location.toString().lastIndexOf("?page=")+6))+1;
-			if (parseInt(listpage)>=${freepage})
-				listpage=${freepage};
+			if (parseInt(listpage)>=${free.page})
+				listpage=${free.page};
 			location.replace("home?page="+listpage);
 		});
 		$(document).on("click",".listpage-btn",function(){

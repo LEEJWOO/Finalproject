@@ -1,4 +1,4 @@
-package kh.nt.spring_02.controller;
+package kh.nt.spring_02.commons;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

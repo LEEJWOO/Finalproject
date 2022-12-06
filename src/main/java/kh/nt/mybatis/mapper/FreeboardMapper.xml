@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="NT.Lostfinder.MemberMapper">
+<mapper namespace="kh.nt.spring_02.dao.mapper.FreeboardMapper">
 	 <select id="home" parameterType="int" resultType="kh.nt.spring_02.model.Freeboard">
 	 	select no, title, id, content, createdate, viewcount from(select rownum as rnum, no, title, id, content, createdate, viewcount from(select * from freeboard order by no asc)) where ((select Count(*) from freeboard)-((#{page}-1)*10)) >= rnum and rnum > ((select Count(*) from freeboard)-(#{page}*10)) order by rnum desc
 	 </select>

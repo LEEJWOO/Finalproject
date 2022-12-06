@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import kh.nt.spring_02.dao.FreeboardDAO;
 import kh.nt.spring_02.model.Freeboard;
 import kh.nt.spring_02.model.Freefile;
 import kh.nt.spring_02.model.Member;
+import kh.nt.spring_02.service.FreeboardServiceImpl;
 
 @Controller
 @RequestMapping(value="/freeboard/")
@@ -49,19 +49,20 @@ location="C://resource//"
 public class FreeboardController {
 	
 	@Autowired
-	private FreeboardDAO freeboardDAO;
+	private FreeboardServiceImpl freeboardService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(FreeboardController.class);
-//	private ApplicationContext ac=new GenericXmlApplicationContext("classpath:context.xml");
-//	private Encryption en=(Encryption) ac.getBean(Encryption.class);
 
 //	private static final String DOWNLOAD_PATH = "/usr/local/tomcat9/webapps/ROOT/resource/";
 	private static final String DOWNLOAD_PATH = "C://resource//";
 	
 	@RequestMapping(value="home")
 	public String home(Model model, int page){
-		model.addAttribute("freeboard",freeboardDAO.home(page));
-		model.addAttribute("freepage",freeboardDAO.homepage());
+		HashMap<String,Object> free = new HashMap<String,Object>();
+		free.put("board", freeboardService.home(page));
+		free.put("page", freeboardService.homepage());
+		free.put("selectpage", page);
+		model.addAttribute("free",free);
 		return "freeboard/freeboard";
 	}
 	@RequestMapping(value="create")
@@ -74,7 +75,7 @@ public class FreeboardController {
 		try {
 			freeboard.setId(((Member)hs.getAttribute("signin")).getId());
 			if(files.length==0) {
-				if(freeboardDAO.create(freeboard))
+				if(freeboardService.create(freeboard))
 					return "redirect:home?page=1";
 			}
 			else {
@@ -86,7 +87,7 @@ public class FreeboardController {
 						ff.add(new Freefile(uuid,((Member)hs.getAttribute("signin")).getId(),file.getOriginalFilename()));
 					}
 				}
-				if(freeboardDAO.create(freeboard,ff))
+				if(freeboardService.create(freeboard,ff))
 					return "redirect:home?page=1";
 			}
 		}catch(Exception e) {
@@ -97,8 +98,8 @@ public class FreeboardController {
 	@RequestMapping(value="view", method=RequestMethod.GET)
 	public String view_page(Model model ,int no){
 		HashMap<String,Object> free = new HashMap<String,Object>();
-		free.put("board",freeboardDAO.view(no));
-		free.put("file",freeboardDAO.viewfile(no));
+		free.put("board",freeboardService.view(no));
+		free.put("file",freeboardService.viewfile(no));
 		model.addAttribute("free",free);
 		return "freeboard/view"; 
 	}
@@ -108,7 +109,7 @@ public class FreeboardController {
 		Freeboard free=new Freeboard();
 		free.setNo(no);
 		free.setId(((Member)hs.getAttribute("signin")).getId());
-		if(freeboardDAO.delete(free))
+		if(freeboardService.delete(free))
 			return "freeboard/home?page=1";
 		logger.info("delete fails");
 		return "freeboard/view?no="+no;
@@ -117,7 +118,7 @@ public class FreeboardController {
 	@RequestMapping(value="download")
 	@ResponseBody
 	public String download(Freefile reqfile, HttpServletResponse response) {
-		String downPath=freeboardDAO.downloadFile(reqfile);
+		String downPath=freeboardService.downloadFile(reqfile);
 		if(downPath!=null){	
 			File file=new File(DOWNLOAD_PATH+downPath);
 			try(OutputStream os = response.getOutputStream();FileInputStream fis = new FileInputStream(file);DataInputStream dis=new DataInputStream(fis)){
@@ -136,7 +137,7 @@ public class FreeboardController {
 	@ResponseBody
 	public boolean updateboard(Freeboard freeboard,HttpSession hs) {
 		freeboard.setId(((Member)hs.getAttribute("signin")).getId());
-		return freeboardDAO.update(freeboard);
+		return freeboardService.update(freeboard);
 	}
 	
 	@ExceptionHandler(Exception.class)

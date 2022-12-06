@@ -27,11 +27,10 @@
 				    로그인 
 				  </div>
 					<form action="member/login" method="post">
-					  <!-- Email input -->
+					  <!-- id input -->
 					  <div class="form-outline mb-4">
 					    <input type="text" name="id" class="form-control" placeholder="아이디를 입력해주세요." />
 					  </div>
-					
 					  <!-- Password input -->
 					  <div class="form-outline mb-4">
 					    <input type="password" name="pw" class="form-control" placeholder="패스워드를 입력해주세요." />
