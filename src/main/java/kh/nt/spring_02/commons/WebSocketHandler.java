@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class WebSocketHandler extends TextWebSocketHandler{
-	private static HashMap<WebSocketSession,String> sessions = new HashMap<WebSocketSession,String>();
+	public static HashMap<WebSocketSession,String> sessions = new HashMap<WebSocketSession,String>();
 	public WebSocketHandler() {
 		super();
 	}
@@ -28,7 +28,7 @@ public class WebSocketHandler extends TextWebSocketHandler{
 	public void handleTextMessage(WebSocketSession session, TextMessage message) {
 		try {
 			for(WebSocketSession s : sessions.keySet())
-				s.sendMessage(new TextMessage((String)sessions.get(s)+" : "+message.getPayload()));
+				s.sendMessage(new TextMessage(((Member)session.getAttributes().get("signin")).getId()+" : "+message.getPayload()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

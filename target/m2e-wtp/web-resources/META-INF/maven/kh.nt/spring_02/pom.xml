@@ -6,7 +6,7 @@
 	<artifactId>spring_02</artifactId>
 	<name>spring_02</name>
 	<packaging>war</packaging>
-	<version>1.1.4-BUILD-SNAPSHOT</version>
+	<version>1.1.5-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.10</org.springframework-version>
