@@ -20,7 +20,6 @@ public class FreeboardDAO{
 	public int homepage(){
 		return fm.homepage();
 	}
-	
 	public int create(Freeboard freeboard) {
 		return fm.createboard(freeboard);
 	}
@@ -40,7 +39,6 @@ public class FreeboardDAO{
 	public int create(Freefile file) {
 		return fm.createfile(file);
 	}
-
 	public Freefile downloadFile(Freefile file) {
 		return fm.downloadfile(file);
 	}

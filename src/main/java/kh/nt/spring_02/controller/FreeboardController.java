@@ -38,7 +38,7 @@ import kh.nt.spring_02.service.FreeboardServiceImpl;
 //fileSizeThreshold=1024*1024*2,
 //maxFileSize=1024*1024*2,
 //maxRequestSize=1024*1024*4,
-//location="/usr/local/tomcat9/webapps/ROOT/resource/"
+//location="/tmp/resource/"
 //)
 @MultipartConfig(
 fileSizeThreshold=1024*1024*2,
@@ -53,7 +53,7 @@ public class FreeboardController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(FreeboardController.class);
 
-//	private static final String DOWNLOAD_PATH = "/usr/local/tomcat9/webapps/ROOT/resource/";
+//	private static final String DOWNLOAD_PATH = "/tmp/resource/";
 	private static final String DOWNLOAD_PATH = "C://resource//";
 	
 	@RequestMapping(value="home")

@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-@Controller
+@RequestMapping(value = "/chat/")
 @SessionAttributes("signin")
-public class HomeController {
+@Controller
+public class ChatController {
+	private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		return "home";
+		return "chat/chatbox";
 	}
 	@ExceptionHandler(Exception.class)
 	public String error(Exception e) {

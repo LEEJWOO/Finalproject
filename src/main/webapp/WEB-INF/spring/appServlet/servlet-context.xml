@@ -4,7 +4,9 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
@@ -27,6 +29,7 @@
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 	<beans:bean id="loginValidator" class="kh.nt.spring_02.commons.Authentication"></beans:bean>
+	<beans:bean id="chatsHandler" class="kh.nt.spring_02.commons.WebSocketHandler"/>
 	<interceptors>
 		<interceptor>
 			<mapping path="/**"/>
@@ -38,9 +41,17 @@
 			<exclude-mapping path="/freeboard/view"/>
 			<exclude-mapping path="/member/**_check"/>
 			<exclude-mapping path="/resources/**"/>
+			<exclude-mapping path="/chats/**"/>
 			<beans:ref bean="loginValidator"/>		
 		</interceptor>
 	</interceptors>
+	
+	<websocket:handlers>
+		<websocket:mapping path="/chats" handler="chatsHandler"/>
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
 	
 	<context:component-scan base-package="kh.nt.spring_02" />
 	

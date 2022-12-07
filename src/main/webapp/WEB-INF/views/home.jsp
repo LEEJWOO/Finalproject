@@ -20,7 +20,7 @@
 	    </Style>
 	</head>
 	<body>
-		<div class="card col" style="width: 18rem;">
+		<div class="card col" style="width: 22rem;">
 			<c:choose>
 				<c:when test="${signin.id == null}">
 				  <div class="card-header">
@@ -51,6 +51,7 @@
 				  </div>
 		            <div>
 				        <button class="btn btn-sm btn-primary" id = "freeboard-btn">게시판</button>
+				        <button class="btn btn-sm btn-primary" id = "chatbox-btn">채팅박스</button>
 					    <button class="btn btn-sm btn-primary" id = "logout-btn">로그아웃</button>
 					    <button class="btn btn-sm btn-primary" id = "editid-btn">회원수정</button>
 					    <button class="btn btn-sm btn-danger" id = "removeid-btn">회원탈퇴</button>
@@ -66,6 +67,9 @@
 	<script>
 		$("#freeboard-btn").on("click",function(){
 			location.replace("freeboard/home?page=1");
+		});
+		$("#chatbox-btn").on("click",function(){
+			location.replace("chat/home");
 		});
 		$("#logout-btn").on("click",function(){
 			$.post("member/login",function(){

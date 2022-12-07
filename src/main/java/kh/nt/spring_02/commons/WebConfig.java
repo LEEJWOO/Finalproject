@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "kh.nt.spring_02" })
+@ComponentScan(basePackages = {"kh.nt.spring_02"})
 public class WebConfig implements WebMvcConfigurer {
     @Bean
     public MultipartResolver multipartResolver() {
